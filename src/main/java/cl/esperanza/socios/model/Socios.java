@@ -36,7 +36,6 @@ public class Socios {
     @Column(nullable = true)
     private String direccion;
 
-
     @Column(nullable = false)
     private String correo;
 }
