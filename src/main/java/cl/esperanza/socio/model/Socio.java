@@ -1,4 +1,4 @@
-package cl.esperanza.socios.model;
+package cl.esperanza.socio.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Socios {
+public class Socio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
