@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Socio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int idSocio;
 
     @Column(unique = true, length = 13, nullable = true) 
     private String run;
