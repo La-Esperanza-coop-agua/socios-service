@@ -40,13 +40,9 @@ public class SocioController {
         return ResponseEntity.ok(socio);
     }
 
-    @GetMapping("/corre/{correo}")
-    public ResponseEntity<Socio> getAllCorreo(@PathVariable String correo) {
-        Socio socio = socioService.obtenerTodosCorreos(correo);
-        if (socio == null) {
-            throw new ResourceNotFoundException(("No se encontro ningun correo"));
-        }
-        return ResponseEntity.ok(socio);
+    @GetMapping("/correo")
+    public ResponseEntity<List<String>> getAllByCorreo() {
+        return ResponseEntity.ok(socioService.obtenerTodosCorreos());
     }
     
     @PostMapping
