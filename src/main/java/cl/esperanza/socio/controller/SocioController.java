@@ -12,6 +12,8 @@ import cl.esperanza.socio.exception.ResourceNotFoundException;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/api/v1/socios") 
@@ -38,6 +40,15 @@ public class SocioController {
         return ResponseEntity.ok(socio);
     }
 
+    @GetMapping("/corre/{correo}")
+    public ResponseEntity<Socio> getAllCorreo(@PathVariable String correo) {
+        Socio socio = socioService.obtenerTodosCorreos(correo);
+        if (socio == null) {
+            throw new ResourceNotFoundException(("No se encontro ningun correo"));
+        }
+        return ResponseEntity.ok(socio);
+    }
+    
     @PostMapping
     public ResponseEntity<Socio> addSocio(@Valid @RequestBody CreateSocioRequest request) {
         

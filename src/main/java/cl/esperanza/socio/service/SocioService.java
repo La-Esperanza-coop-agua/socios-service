@@ -26,4 +26,7 @@ public class SocioService {
     public Socio guardarSocio(Socio socio) {
         return socioRepo.save(socio);
     }
+    public Socio obtenerTodosCorreos(String correo) {
+        return socioRepo.findAllCorreo(correo);
+    }
 }
