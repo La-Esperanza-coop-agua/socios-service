@@ -21,10 +21,10 @@ public class Socio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSocio;
 
-    @Column(unique = true, length = 13, nullable = true) 
+    @Column(unique = true, length = 13, nullable = false) 
     private String run;
 
-    @Column(unique = true, length = 13, nullable = true) 
+    @Column(unique = true, length = 13, nullable = false) 
     private int telefono;
 
     @Column(nullable = true)
