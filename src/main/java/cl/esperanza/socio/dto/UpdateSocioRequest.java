@@ -3,13 +3,10 @@ package cl.esperanza.socio.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
 
-public record CreateSocioRequest(
-    @NotBlank(message = "El RUN no puede estar vacío")
-    @Size(max = 10, message = "El RUN debe tener los numeros sin punto y usar el guion") String run,
-
+public record UpdateSocioRequest(
     @PositiveOrZero(message= "Debe ingresar un numero de telefono valido") int telefono,
+    
     @NotBlank(message = "El nombre es obligatorio") String nombre,
     @NotBlank(message = "El apellido es obligatorio") String apellido,
     @NotBlank(message = "La dirección no puede estar vacía") String direccion,

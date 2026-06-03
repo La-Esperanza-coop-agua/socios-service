@@ -15,16 +15,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Socio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idSocio;
+    private Integer idSocio;
 
-    @Column(unique = true, length = 13, nullable = false) 
+    @Column(unique = true, length = 10, nullable = false) 
     private String run;
 
-    @Column(unique = true, length = 13, nullable = false) 
+    @Column(unique = true, nullable = false) 
     private int telefono;
 
     @Column(nullable = true)
