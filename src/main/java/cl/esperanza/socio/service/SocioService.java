@@ -39,4 +39,8 @@ public class SocioService {
     public boolean existeSocio(String run) {
         return socioRepo.findByRun(run) != null;
     }
+
+    public void eliminarPorRun(String run){
+        socioRepo.deleteByRun(run);
+    }
 }

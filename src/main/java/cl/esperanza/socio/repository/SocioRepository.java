@@ -13,4 +13,5 @@ public interface SocioRepository extends JpaRepository<Socio, Integer> {
     @Query("SELECT DISTINCT s.correo FROM Socio s")
     List<String> findAllByCorreo();
     
+    void deleteByRun(String run);
 }

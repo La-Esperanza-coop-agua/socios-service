@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,46 +31,40 @@ public class SocioController {
     public SocioController(SocioService socioService) {
         this.socioService = socioService;
     }
-    // Endpoint 1 get a todos los socios
-    @GetMapping
-    public ResponseEntity<List<Socio>> getAllSocios() {
-        return ResponseEntity.ok(socioService.obtenerTodos());
-    }
-    // Endpoint 2 get a un socio por un rut en especifico
-    @GetMapping("/run/{run}")
-    public ResponseEntity<Socio> getSocioByRun(@PathVariable String run) {
-        Socio socio = socioService.obtenerPorRun(run); 
 
-        if (socio == null) {
-            throw new ResourceNotFoundException("No se encontró ningún socio con el RUN: " + run);
-        }
-        
-        return ResponseEntity.ok(socio);
-    }
-    // Endpoint 3 get a todos los correos de los socios
+    // Endpoint 1 get a todos los correos de los socios (para Notificaciones)
     @GetMapping("/correo")
     public ResponseEntity<List<String>> getAllByCorreo() {
         return ResponseEntity.ok(socioService.obtenerTodosCorreos());
     }
-    // Endpoint 4 post para agregar un socio
+
+    // Endpoint 2 post para agregar un socio
     @PostMapping
     public ResponseEntity<Socio> addSocio(@Valid @RequestBody CreateSocioRequest request) {
         Socio nuevoSocio = socioService.guardarSocio(SocioMapper.toModel(request));
         
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoSocio);
     }
-    // Endpoint 5 put para actualizar socio por el rut
+
+    // Endpoint 3 put para actualizar socio por el rut
     @PutMapping("/actualizar/{run}")
     public ResponseEntity<Socio> updateSocio(@PathVariable String run, @Valid @RequestBody UpdateSocioRequest request) {
         Socio socioActualizado = socioService.actualizarSocio(run, SocioMapper.toModel(run, request));
         return ResponseEntity.ok(socioActualizado);
     }
 
-    // Endpoint 6: Validar si un socio existe (Para Facturación e Incidencias)
+    // Endpoint 4 Validar si un socio existe (Para Facturación e Incidencias)
     @GetMapping("/existe/{run}")
     public ResponseEntity<Boolean> existeSocio(@PathVariable String run) {
         boolean existe = socioService.existeSocio(run);
         return ResponseEntity.ok(existe);
+    }
+
+    // EndPoint 5 borrar por run
+    @DeleteMapping("/borrar/{run}")
+    public ResponseEntity<Void> eliminarTelemetria(@PathVariable String run){
+        socioService.eliminarPorRun(run);
+        return ResponseEntity.noContent().build();
     }
 
 }
