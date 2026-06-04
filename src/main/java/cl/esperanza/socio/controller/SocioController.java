@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cl.esperanza.socio.dto.CreateSocioRequest;
 import cl.esperanza.socio.dto.UpdateSocioRequest;
-import cl.esperanza.socio.exception.ResourceNotFoundException;
 import cl.esperanza.socio.mapper.SocioMapper;
 import cl.esperanza.socio.model.Socio;
 import cl.esperanza.socio.service.SocioService;
 import jakarta.validation.Valid;
-
 
 @RestController
 @RequestMapping("/api/v1/socios") 
