@@ -35,4 +35,8 @@ public class SocioService {
         socioActualizado.setRun(run);
         return socioRepo.save(socioActualizado);
     }
+
+    public boolean existeSocio(String run) {
+        return socioRepo.findByRun(run) != null;
+    }
 }

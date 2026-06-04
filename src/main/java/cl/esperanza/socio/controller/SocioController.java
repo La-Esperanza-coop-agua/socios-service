@@ -64,4 +64,12 @@ public class SocioController {
         Socio socioActualizado = socioService.actualizarSocio(run, SocioMapper.toModel(run, request));
         return ResponseEntity.ok(socioActualizado);
     }
+
+    // Endpoint 6: Validar si un socio existe (Para Facturación e Incidencias)
+    @GetMapping("/existe/{run}")
+    public ResponseEntity<Boolean> existeSocio(@PathVariable String run) {
+        boolean existe = socioService.existeSocio(run);
+        return ResponseEntity.ok(existe);
+    }
+
 }
