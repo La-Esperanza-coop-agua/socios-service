@@ -31,10 +31,16 @@ public class SocioService {
         return socioRepo.findAllByCorreo();
     }
 
-    public Socio actualizarSocio(String run, Socio socioActualizado){
-        socioActualizado.setRun(run);
-        return socioRepo.save(socioActualizado);
+public Socio actualizarSocio(String run, Socio socioActualizado){
+    Socio socioExistente = obtenerPorRun(run);
+
+    if (socioExistente != null) {
+        socioActualizado.setIdSocio(socioExistente.getIdSocio());
     }
+
+    socioActualizado.setRun(run);
+    return socioRepo.save(socioActualizado);
+}
 
     public boolean existeSocio(String run) {
         return socioRepo.findByRun(run) != null;

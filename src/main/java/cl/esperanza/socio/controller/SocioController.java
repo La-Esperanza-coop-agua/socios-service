@@ -20,8 +20,15 @@ import cl.esperanza.socio.model.Socio;
 import cl.esperanza.socio.service.SocioService;
 import jakarta.validation.Valid;
 
+// Importaciones de Swagger
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
-@RequestMapping("/api/v1/socios") 
+@RequestMapping("/api/v1/socios")
+@Tag(name = "Socios", description = "Gestión de los socios de la cooperativa de agua")
 public class SocioController {
 
     private final SocioService socioService;
@@ -30,39 +37,52 @@ public class SocioController {
         this.socioService = socioService;
     }
 
-    // Endpoint 1 get a todos los correos de los socios (para Notificaciones)
+    // Endpoint 1
+    @Operation(summary = "Obtener correos", description = "Obtiene una lista con todos los correos de los socios (para Notificaciones)")
+    @ApiResponse(responseCode = "200", description = "Lista de correos obtenida exitosamente")
     @GetMapping("/correo")
     public ResponseEntity<List<String>> getAllByCorreo() {
         return ResponseEntity.ok(socioService.obtenerTodosCorreos());
     }
 
-    // Endpoint 2 post para agregar un socio
+    // Endpoint 2
+    @Operation(summary = "Registrar un nuevo socio", description = "Agrega un socio al sistema con sus datos básicos")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Socio creado exitosamente"),
+        @ApiResponse(responseCode = "400", description = "Error de validación en los datos enviados")
+    })
     @PostMapping
     public ResponseEntity<Socio> addSocio(@Valid @RequestBody CreateSocioRequest request) {
         Socio nuevoSocio = socioService.guardarSocio(SocioMapper.toModel(request));
-        
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoSocio);
     }
 
-    // Endpoint 3 put para actualizar socio por el rut
+    // Endpoint 3
+    @Operation(summary = "Actualizar un socio", description = "Modifica la información de un socio existente usando su RUN")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Socio actualizado exitosamente"),
+        @ApiResponse(responseCode = "404", description = "Socio no encontrado")
+    })
     @PutMapping("/actualizar/{run}")
     public ResponseEntity<Socio> updateSocio(@PathVariable String run, @Valid @RequestBody UpdateSocioRequest request) {
         Socio socioActualizado = socioService.actualizarSocio(run, SocioMapper.toModel(run, request));
         return ResponseEntity.ok(socioActualizado);
     }
 
-    // Endpoint 4 Validar si un socio existe (Para Facturación e Incidencias)
+    // Endpoint 4
+    @Operation(summary = "Validar si un socio existe", description = "Consulta si un RUN específico está registrado (Usado por Facturación e Incidencias)")
     @GetMapping("/existe/{run}")
     public ResponseEntity<Boolean> existeSocio(@PathVariable String run) {
         boolean existe = socioService.existeSocio(run);
         return ResponseEntity.ok(existe);
     }
 
-    // EndPoint 5 borrar por run
+    // Endpoint 5
+    @Operation(summary = "Eliminar un socio", description = "Borra todos los registros de un socio del sistema usando su RUN")
+    @ApiResponse(responseCode = "204", description = "Socio eliminado exitosamente (Sin contenido)")
     @DeleteMapping("/borrar/{run}")
     public ResponseEntity<Void> eliminarTelemetria(@PathVariable String run){
         socioService.eliminarPorRun(run);
         return ResponseEntity.noContent().build();
     }
-
 }
